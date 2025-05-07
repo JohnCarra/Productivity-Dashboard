@@ -90,6 +90,17 @@
             Text = "Productivity Dashboard";
             ResumeLayout(false);
             PerformLayout();
+
+            // btnDelete
+            btnDeleteTask = new Button();
+            btnDeleteTask.Location = new Point(50, 180);
+            btnDeleteTask.Name = "btnDeleteTask";
+            btnDeleteTask.Size = new Size(100, 30);
+            btnDeleteTask.Text = "Delete Task";
+            btnDeleteTask.UseVisualStyleBackColor = true;
+            Controls.Add(btnDeleteTask);
+
+
         }
 
         #endregion
@@ -97,6 +108,7 @@
         private Label Title;
         private Button btnAddTask;
         private Button btnViewTasks;
+        private Button btnDeleteTask;
         private ListView taskListView;
     }
 }

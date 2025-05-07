@@ -45,7 +45,7 @@ namespace Productivity_Dashboard
                 using var conn = new NpgsqlConnection(connectionString);
                 conn.Open();
 
-                string query = "SELECT name, due_date, status FROM tasks;";
+                string query = "SELECT id, name, due_date, status FROM tasks;";
                 using var cmd = new NpgsqlCommand(query, conn);
                 using var reader = cmd.ExecuteReader();
 
@@ -53,9 +53,10 @@ namespace Productivity_Dashboard
                 {
                     var task = new TaskItem
                     {
-                        Name = reader.IsDBNull(0) ? "" : reader.GetString(0),
-                        DueDate = reader.GetDateTime(1),
-                        Status = reader.IsDBNull(2) ? "Unknown" : reader.GetString(2)
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        DueDate = reader.GetDateTime(2),
+                        Status = reader.GetString(3)
                     };
                     tasks.Add(task);
                 }
@@ -66,6 +67,52 @@ namespace Productivity_Dashboard
             }
 
             return tasks;
+        }
+
+        public static bool UpdateTask(TaskItem task)
+        {
+            try
+            {
+                using var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                string query = @"UPDATE tasks
+                                 SET name = @name, due_date = @due_date, status = @status
+                                 WHERE id = @id;";
+
+                using var cmd = new NpgsqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("name", task.Name);
+                cmd.Parameters.AddWithValue("due_date", task.DueDate);
+                cmd.Parameters.AddWithValue("status", task.Status);
+                cmd.Parameters.AddWithValue("id", task.Id);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Database error: " + ex.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public static bool DeleteTask(int taskId)
+        {
+            try
+            {
+                using var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                string query = "DELETE FROM tasks WHERE id = @id;";
+                using var cmd = new NpgsqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("id", taskId);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Database error: " + ex.Message, "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
     }
 }
