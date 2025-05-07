@@ -9,7 +9,6 @@ namespace Productivity_Dashboard
 
         private Label Title;
         private Button btnAddTask;
-        private Button btnViewTasks;
         private Button btnDeleteTask;
         private ListView taskListView;
         private Panel buttonPanel;
@@ -25,7 +24,6 @@ namespace Productivity_Dashboard
         {
             Title = new Label();
             btnAddTask = new Button();
-            btnViewTasks = new Button();
             btnDeleteTask = new Button();
             taskListView = new ListView();
             buttonPanel = new Panel();
@@ -47,10 +45,9 @@ namespace Productivity_Dashboard
 
             // Button Panel
             buttonPanel.Location = new Point(20, 70);
-            buttonPanel.Size = new Size(150, 130);
+            buttonPanel.Size = new Size(150, 80);
             buttonPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             buttonPanel.Controls.Add(btnAddTask);
-            buttonPanel.Controls.Add(btnViewTasks);
             buttonPanel.Controls.Add(btnDeleteTask);
 
             // Add Task Button
@@ -60,15 +57,8 @@ namespace Productivity_Dashboard
             btnAddTask.Text = "Add Task";
             btnAddTask.UseVisualStyleBackColor = true;
 
-            // View Tasks Button
-            btnViewTasks.Location = new Point(0, 45);
-            btnViewTasks.Name = "btnViewTasks";
-            btnViewTasks.Size = new Size(130, 30);
-            btnViewTasks.Text = "View Tasks";
-            btnViewTasks.UseVisualStyleBackColor = true;
-
             // Delete Task Button
-            btnDeleteTask.Location = new Point(0, 90);
+            btnDeleteTask.Location = new Point(0, 45);
             btnDeleteTask.Name = "btnDeleteTask";
             btnDeleteTask.Size = new Size(130, 30);
             btnDeleteTask.Text = "Delete Task";

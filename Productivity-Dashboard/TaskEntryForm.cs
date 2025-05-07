@@ -10,33 +10,39 @@ namespace Productivity_Dashboard
         public DateTime DueDate => dtpDueDate.Value;
         public string Status => cmbStatus.SelectedItem?.ToString() ?? "Pending";
 
-        // Internal task reference (used for editing)
-        private TaskItem? _taskToEdit;
+        private readonly TaskItem? existingTask;
 
-        // Constructor for adding a new task
+        // Constructor for "Add" mode
         public TaskEntryForm()
         {
             InitializeComponent();
         }
 
-        // Constructor for editing an existing task
-        public TaskEntryForm(TaskItem taskToEdit) : this()
+        // Constructor for "Edit" mode
+        public TaskEntryForm(TaskItem taskToEdit)
         {
-            _taskToEdit = taskToEdit;
+            InitializeComponent();
+            existingTask = taskToEdit;
         }
 
         private void TaskEntryForm_Load(object sender, EventArgs e)
         {
+            // Populate status dropdown
             cmbStatus.Items.AddRange(new[] { "Pending", "In Progress", "Completed" });
             cmbStatus.SelectedIndex = 0;
 
-            if (_taskToEdit != null)
+            if (existingTask != null)
             {
-                txtTaskName.Text = _taskToEdit.Name;
-                dtpDueDate.Value = _taskToEdit.DueDate;
-
-                int index = cmbStatus.Items.IndexOf(_taskToEdit.Status);
-                cmbStatus.SelectedIndex = index >= 0 ? index : 0;
+                // Editing an existing task
+                txtTaskName.Text = existingTask.Name;
+                dtpDueDate.Value = existingTask.DueDate;
+                cmbStatus.SelectedItem = existingTask.Status;
+                Text = "Edit Task";
+            }
+            else
+            {
+                // Adding a new task
+                Text = "Add Task";
             }
         }
 
@@ -44,21 +50,22 @@ namespace Productivity_Dashboard
         {
             if (string.IsNullOrWhiteSpace(txtTaskName.Text) || cmbStatus.SelectedIndex == -1)
             {
-                MessageBox.Show("Please enter a task name and select a status.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a task name and select a status.",
+                    "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
-        // Unused label click handlers (optional to remove)
+        // These can be safely removed or left empty
         private void label1_Click(object sender, EventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
     }

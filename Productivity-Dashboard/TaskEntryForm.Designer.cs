@@ -43,7 +43,7 @@ namespace Productivity_Dashboard
             MaximizeBox = false;
             MinimizeBox = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Add or Edit Task";
+            Text = "Add Task";
 
             // Task Name Label
             lblTaskName.AutoSize = true;
@@ -51,6 +51,7 @@ namespace Productivity_Dashboard
             lblTaskName.Text = "Task Name:";
 
             // Task Name TextBox
+            txtTaskName = new TextBox();
             txtTaskName.Location = new Point(130, 27);
             txtTaskName.Size = new Size(270, 27);
             txtTaskName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -61,6 +62,7 @@ namespace Productivity_Dashboard
             lblDueDate.Text = "Due Date:";
 
             // Due Date Picker
+            dtpDueDate = new DateTimePicker();
             dtpDueDate.Location = new Point(130, 72);
             dtpDueDate.Size = new Size(270, 27);
             dtpDueDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -71,6 +73,7 @@ namespace Productivity_Dashboard
             lblStatus.Text = "Status:";
 
             // Status ComboBox
+            cmbStatus = new ComboBox();
             cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatus.Location = new Point(130, 117);
             cmbStatus.Size = new Size(270, 28);
@@ -90,7 +93,7 @@ namespace Productivity_Dashboard
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
 
-            // Add controls
+            // Add controls to form
             Controls.Add(lblTaskName);
             Controls.Add(txtTaskName);
             Controls.Add(lblDueDate);
